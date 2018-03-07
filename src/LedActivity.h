@@ -10,10 +10,12 @@ public:
         motionState = _motionState;
         ledControl = _ledControl;
     }
-
-    virtual void begin();
+    
     virtual bool update(int param);
-    virtual void end();
+    ~LedActivity()
+    {
+
+    }
 protected:
     MotionState* motionState;
     LedControl* ledControl;

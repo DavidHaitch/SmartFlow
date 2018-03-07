@@ -8,10 +8,6 @@ public:
     {
     }
 
-    void begin()
-    {
-    }
-
     bool update(int param)
     {
         if (ignitedLeds <= NUM_LEDS / 2)
@@ -41,10 +37,6 @@ public:
         {
             return false;
         }
-    }
-
-    void end()
-    {       
     }
 private:
     long lastChangeTime;

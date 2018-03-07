@@ -13,6 +13,7 @@ public:
     int angularVelocityPercent;
     float angularVelocity;
     int jerkPercent;
+    float jerk;
     float pointingX;
     float pointingY;
     float pointingZ;

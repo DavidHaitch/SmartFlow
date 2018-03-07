@@ -8,10 +8,6 @@ public:
     SparkleActivity(MotionState* _motionState, LedControl* _ledControl) : LedActivity(_motionState, _ledControl)
     {
     }
-    
-    void begin()
-    {
-    }
 
     bool update(int param)
     {
@@ -43,9 +39,6 @@ public:
         return true;
     }
 
-    void end()
-    {     
-    }
 private:
     long lastSparkleTime;
     bool sparkled[NUM_LEDS];

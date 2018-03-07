@@ -32,19 +32,21 @@ int MotionState::Update(LSM9DS1* imu)
     float cmY = imu->calcMag(imu->my);
     float cmZ = imu->calcMag(imu->mz);
     
+    // orientation.updateIMU(cgX, cgY, cgZ,
+    //                     cmX, cmY, cmZ);
     orientation.update(cgX, cgY, cgZ,
-                caX, caY, caZ,
-                cmX, cmY, cmZ);
+            caX, caY, caZ,
+            cmX, cmY, cmZ);
 
     float accel = abs(caX) + abs(caY) + abs(caZ);
-    float jerk = abs(accel - lastAccel);
+    jerk = abs(accel - lastAccel);
     if(jerk > maxJerk)
     {
         maxJerk = jerk;
         jerkPercent = 100;
     }
 
-    if(maxJerk < 10 * jerk)
+    if(maxJerk < 1 * jerk)
     {
         //We don't have enough samples to really make sense.
         jerkPercent = 0;
@@ -65,7 +67,7 @@ int MotionState::Update(LSM9DS1* imu)
         angularVelocityPercent = 100;
     } 
 
-    if(maxAngularVelocity < 10 * angularVelocity)
+    if(maxAngularVelocity < 1 * angularVelocity)
     {
         //We don't have enough samples to really make sense.
         angularVelocityPercent = 0;

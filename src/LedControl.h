@@ -3,7 +3,7 @@
 #include <FastLED.h>
 
 #define NUM_LEDS    13
-
+#define EFFECTIVE_LEDS 6
 class LedControl
 {
 public:
