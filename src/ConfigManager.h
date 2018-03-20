@@ -41,7 +41,7 @@ public:
         return 0;
     }
 private:
-    long lastSmackTime;
+    int lastSmackTime;
     int smackCount;
 };
 #endif

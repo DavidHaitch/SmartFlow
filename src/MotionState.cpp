@@ -32,11 +32,11 @@ int MotionState::Update(LSM9DS1* imu)
     float cmY = imu->calcMag(imu->my);
     float cmZ = imu->calcMag(imu->mz);
     
-    // orientation.updateIMU(cgX, cgY, cgZ,
-    //                     cmX, cmY, cmZ);
-    orientation.update(cgX, cgY, cgZ,
-            caX, caY, caZ,
-            cmX, cmY, cmZ);
+    orientation.updateIMU(cgX, cgY, cgZ,
+                          cmX, cmY, cmZ);
+    // orientation.update(cgX, cgY, cgZ,
+    //         caX, caY, caZ,
+    //         cmX, cmY, cmZ);
 
     float accel = abs(caX) + abs(caY) + abs(caZ);
     jerk = abs(accel - lastAccel);

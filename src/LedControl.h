@@ -9,6 +9,7 @@ class LedControl
 public:
     LedControl();
     uint8_t brightness;
+    uint8_t maxBrightness;
     CRGB leds[NUM_LEDS];
     void Clear();
     void Refresh();

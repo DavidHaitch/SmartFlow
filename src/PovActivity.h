@@ -5,18 +5,6 @@
 #define FPS 120
 #define FRAMES 16
 
-//const byte lookup[7][3] = {{0, 0, 0}, {255, 255, 0}, {0, 255, 0}, {255, 0, 0}, {255, 135, 0}, {0, 0, 255}, {251, 0, 255}};
-//const byte lookup[4][3] = {{0, 0, 255}, {0, 0, 0}, {255, 0, 0}, {255, 255, 255}};
-// const byte data[] = {0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-//                     1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 
-//                     0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,
-//                     0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0,
-//                     0, 0, 0, 3, 4, 3, 0, 3, 4, 3, 0, 0, 0,
-//                     0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0,
-//                     0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0,
-//                     5, 6, 5, 0, 0, 0, 0, 0, 0, 0, 5, 6, 5,
-//                     0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0,
-//                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 const byte data[] PROGMEM  = {0, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 0,
                             1, 0, 1, 1, 2, 1, 1, 1, 2, 1, 1, 0, 1,
                             1, 1, 0, 2, 1, 1, 1, 1, 1, 2, 0, 1, 1,
@@ -64,14 +52,13 @@ public:
             CRGB color = CRGB(0,0,0);
             if(colorId == 0)
             {
-                color = CHSV(hueShift, 255, ledControl->brightness);
+                color = CHSV(hueShift, 255, 255);
             }
             if(colorId == 2)
             {
-                color = CHSV(hueShift + 128, 255, ledControl->brightness);
+                color = CHSV(hueShift + 128, 255, 255);
             }
 
-            //ledControl->leds[i] = CRGB(lookup[colorId][0], lookup[colorId][1], lookup[colorId][2]);
             ledControl->leds[i] = color;
         }
 

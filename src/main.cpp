@@ -1,11 +1,11 @@
 #include <Wire.h>
-#include <SPI.h>
-#include <SparkFunLSM9DS1.h>
+#include <LSM9DS1.h>
 #include "MotionState.h"
 #include "LedControl.h"
 #include "LedActivity.h"
 #include "ColormapActivity.h"
-#include "SparkleActivity.h"
+//#include "SparkleActivity.h"
+#include "SwingActivity.h"
 #include "ColorsweepActivity.h"
 #include "ConfigManager.h"
 #include "PovActivity.h"
@@ -14,7 +14,7 @@ LSM9DS1 imu;
 MotionState motionState;
 LedControl ledControl;
 //IgniteActivity ignite(&motionState, &ledControl);
-//SparkleActivity sparkle(&motionState, &ledControl);
+SwingActivity swing(&motionState, &ledControl);
 ColorsweepActivity colorsweep(&motionState, &ledControl);
 ColormapActivity colormap(&motionState, &ledControl);
 PovActivity pov(&motionState, &ledControl);
@@ -57,14 +57,11 @@ void calibrate()
         }
 
         motionState.Update(&imu);
-        Serial.println(motionState.angularVelocity);
-        
     }
 }
 
 void setup()
 {
-    imu.settings.device.commInterface = IMU_MODE_I2C;
     imu.settings.device.mAddress = LSM9DS1_M;
     imu.settings.device.agAddress = LSM9DS1_AG;
     imu.settings.gyro.scale = 2000;
@@ -72,10 +69,10 @@ void setup()
     imu.settings.gyro.HPFEnable = true;
     imu.settings.accel.scale = 16;
     imu.begin();
-    Serial.begin(9600);
     calibrate();
+    Serial.begin(9600);
     base = &colormap;
-    //effect = &sparkle;
+    effect = &swing;
 }
 
 bool configured = false;
@@ -93,51 +90,52 @@ void loop()
         {
             if(config.options[0]%3 == 0)
             {
-                ledControl.brightness = 255;
+                ledControl.maxBrightness = 255;
             }
             else if(config.options[0]%3 == 1)
             {
-                ledControl.brightness = 128;
+                ledControl.maxBrightness = 128;
             }
             else
             {
-                ledControl.brightness = 64;
+                ledControl.maxBrightness = 32;
             }
         }
 
         if(c == 2)
         {
-            if(config.options[1]%4 == 0)
+            uint8_t mode = config.options[1]%4;
+            effectEnable = false;
+            switch(mode)
             {
-                effectEnable = true;
-                base = &colormap;
-            }
-            else if(config.options[1]%4 == 1)
-            {
-                effectEnable = false;
-                base = &colorsweep;
-            }
-            else if(config.options[1]%4 == 2)
-            {
-                effectEnable = false;
-                base = &pov;
-            }
-            else
-            {
-               effectEnable = false;
-               base = &zap; 
+                case 0:
+                    effectEnable = true;
+                    base = &colormap;
+                    break;
+                case 1:
+                    effectEnable = true;
+                    base = &colorsweep;
+                    break;
+                case 2:
+                    effectEnable = true;
+                    base = &pov;
+                    break;
+                case 3:
+                    effectEnable = true;
+                    base = &zap;
+                    break;
             }
         }
 
         if(c >= 3)
-        {
+        {          
             configured = true;
         }
     }
 
     if(effectEnable)
     {
-        //effect->update(0);
+        effect->update(0);
     }
 
     ledControl.Refresh();
